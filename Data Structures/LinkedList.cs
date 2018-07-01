@@ -10,7 +10,7 @@ namespace Data_Structures {
 
         public LinkedListNode(string data, LinkedListNode next) {
             this.Data = data;
-            this.Next = null;
+            this.Next = next;
         }
     }
 
@@ -34,8 +34,7 @@ namespace Data_Structures {
             while (current.Next != null) {
                 current = current.Next;
             }
-
-                current.Next = newNode;
+            current.Next = newNode;
         }
         
         public LinkedListNode GetNodeAt(int index) {
@@ -77,7 +76,18 @@ namespace Data_Structures {
         /// </summary>
         /// <returns>int: count</returns>
         public int Count() {
-            return -1;
+            if (Head == null)
+            {
+                return 0;
+            }
+            int count = 0;
+            LinkedListNode current = Head;
+            while (current != null)
+            {
+                current = current.Next;
+                count++;
+            }
+            return count;
         }
 
         /// <summary>
@@ -86,15 +96,26 @@ namespace Data_Structures {
         /// <param name="data"></param>
         /// <returns>success: true</returns>
         public bool AddToStart(string data) {
-            return false;
+            Head = new LinkedListNode(data, Head);
+            return true;
         }
 
         public bool AddNodeAt(string data, int index) {
-            return false;
+            if (index == 0)
+            {
+                AddToStart(data);
+                return true;
+            }
+            else
+            {
+                GetNodeAt(index - 1).Next = new LinkedListNode(data, GetNodeAt(index));
+            }
+            return true;
         }
 
         public bool DeleteNodeAt(int index) {
-            return false;
+            GetNodeAt(index - 1).Next = GetNodeAt(index + 1);
+            return true;
         }
 
     }
